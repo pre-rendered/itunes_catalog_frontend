@@ -9,42 +9,30 @@ import { Search } from '@material-ui/icons';
 import styles from './styles';
 
 class Searchbar extends Component {
-  componentWillMount() {
-    this.setState({
-      term: '',
-    });
-  }
-
-  handleSearchChange = (ev) => this.updateSearchTerm(ev);
-
-  updateSearchTerm = (ev) => {
-    const value = ev.target.value;
-    this.setState({ term: value });
-  }
-
   render() {
-    const { classes } = this.props;
-    const { term } = this.state;
+    const { classes, onChange, onSubmit, term } = this.props;
     return(
       <div>
-        <FormControl>
-          <TextField
-            id="standard-search"
-            label="Search iTunes"
-            type="search"
-            className={classes.textField}
-            margin="normal"
-            value={term}
-            onChange={this.handleSearchChange}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </FormControl>
+        <form onSubmit={onSubmit}>
+          <FormControl>
+            <TextField
+              id="standard-search"
+              label="Search iTunes"
+              type="search"
+              className={classes.textField}
+              margin="normal"
+              value={term}
+              onChange={onChange}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FormControl>
+        </form>
       </div>
     );
   }
