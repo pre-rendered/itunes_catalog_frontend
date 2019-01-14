@@ -10,6 +10,14 @@ import styles from './styles';
 import { removeDashes, capitalize } from '../../utils/helpers';
 
 class SearchResultList extends Component {
+  shouldComponentUpdate(nextProps, _nextState) {
+    const { isFetching } = this.props;
+    if (isFetching !== nextProps.isFetching) {
+      return true;
+    }
+    return false;
+  }
+
   handleClick = (item) => {
     this.props.onFavoriteClick(item);
   }
