@@ -21,6 +21,7 @@ class App extends Component {
       favorites: {},
       tab: 'home',
       isFetching: false,
+      noResults: false,
     };
   }
 
@@ -38,9 +39,15 @@ class App extends Component {
 
     request(`${uri}${term.trim()}`)
       .then((response) => {
+        let noResults = false;
+        if (Object.keys(response.body).length === 0) {
+          noResults = true;
+        }
+
         this.setState({
           data: response.body,
           isFetching: false,
+          noResults,
         });
       })
       .catch((err) => {
@@ -81,7 +88,7 @@ class App extends Component {
   }
 
   render() {
-    const { data, term, tab, favorites, isFetching } = this.state;
+    const { data, term, tab, favorites, isFetching, noResults } = this.state;
     return (
       <div className="App">
         <AppBar position="static" color="default">
@@ -106,7 +113,8 @@ class App extends Component {
             <SearchResultList
               results={data}
               onFavoriteClick={this.handleFavoriteClick}
-              isFetching={isFetching}/>
+              isFetching={isFetching}
+              noResults={noResults}/>
           </div>
         }
         {tab === 'favorites' && <FavoritesList favorites={favorites} />}
