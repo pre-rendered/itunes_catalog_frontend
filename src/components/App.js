@@ -20,6 +20,7 @@ class App extends Component {
       data: {},
       favorites: {},
       tab: 'home',
+      isFetching: false,
     };
   }
 
@@ -31,10 +32,15 @@ class App extends Component {
   handleSubmit = (ev) => {
     ev.preventDefault();
     const { term } = this.state;
-    request(`${uri}${term}`)
+    this.setState({
+      isFetching: true,
+    });
+
+    request(`${uri}${term.trim()}`)
       .then((response) => {
         this.setState({
           data: response.body,
+          isFetching: false,
         });
       })
       .catch((err) => {
@@ -75,7 +81,7 @@ class App extends Component {
   }
 
   render() {
-    const { data, term, tab, favorites } = this.state;
+    const { data, term, tab, favorites, isFetching } = this.state;
     return (
       <div className="App">
         <AppBar position="static" color="default">
@@ -97,7 +103,10 @@ class App extends Component {
               onSubmit={this.handleSubmit}
               term={term}
             />
-            <SearchResultList results={data} onFavoriteClick={this.handleFavoriteClick} />
+            <SearchResultList
+              results={data}
+              onFavoriteClick={this.handleFavoriteClick}
+              isFetching={isFetching}/>
           </div>
         }
         {tab === 'favorites' && <FavoritesList favorites={favorites} />}

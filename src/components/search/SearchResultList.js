@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Grid,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import SearchResult from './SearchResult';
@@ -14,7 +15,11 @@ class SearchResultList extends Component {
   }
 
   render() {
-    const { results } = this.props;
+    const { results, isFetching } = this.props;
+
+    if (isFetching) {
+      return <CircularProgress />;
+    }
 
     return(
       <div>
