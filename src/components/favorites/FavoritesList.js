@@ -12,7 +12,6 @@ class FavoritesList extends Component {
   render() {
     const { favorites } = this.props;
 
-    console.log(favorites);
     return(
       <div>
         { favorites && Object.keys(favorites).length > 0 &&
