@@ -10,3 +10,7 @@ export const capitalize = (string) => {
     })
     .join(' ');
 }
+
+export const removeEmpty = (obj) => {
+  Object.keys(obj).forEach((key) => (obj[key].length === 0) && delete obj[key]);
+}

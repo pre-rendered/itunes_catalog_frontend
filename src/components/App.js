@@ -8,6 +8,7 @@ import {
 import Searchbar from './search/Searchbar';
 import SearchResultList from './search/SearchResultList';
 import FavoritesList from './favorites/FavoritesList';
+import { removeEmpty } from '../utils/helpers';
 import '../styles/App.css';
 
 const uri = `http://localhost:4000/api/search?term=`;
@@ -74,6 +75,8 @@ class App extends Component {
     favorites[kind] = newItems.filter((newItem) => {
       return newItem.isFavorite;
     });
+
+    removeEmpty(favorites);
 
     this.setState({
       data,

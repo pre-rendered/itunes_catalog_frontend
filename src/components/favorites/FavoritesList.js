@@ -12,6 +12,10 @@ class FavoritesList extends Component {
   render() {
     const { favorites } = this.props;
 
+    if (Object.keys(favorites).length === 0) {
+      return <Typography variant="h5">No favorites added.</Typography>
+    }
+
     return(
       <div>
         { favorites && Object.keys(favorites).length > 0 &&
