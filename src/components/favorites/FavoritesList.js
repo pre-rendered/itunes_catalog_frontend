@@ -10,10 +10,10 @@ import { removeDashes, capitalize } from '../../utils/helpers';
 
 class FavoritesList extends Component {
   render() {
-    const { favorites } = this.props;
+    const { classes, favorites } = this.props;
 
     if (Object.keys(favorites).length === 0) {
-      return <Typography variant="h5">No favorites added.</Typography>
+      return <Typography className={classes.marginTop10} variant="h5">No favorites added.</Typography>
     }
 
     return(

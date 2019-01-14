@@ -12,6 +12,9 @@ const styles = {
   cardMargin: {
     marginBottom: '32px',
   },
+  marginTop10: {
+    marginTop: 10,
+  },
   media: {
     display: 'block',
     marginLeft: 'auto',

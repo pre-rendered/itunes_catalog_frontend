@@ -15,14 +15,14 @@ class SearchResultList extends Component {
   }
 
   render() {
-    const { results, isFetching, noResults } = this.props;
+    const { results, isFetching, noResults, classes } = this.props;
 
     if (isFetching) {
       return <CircularProgress />;
     }
 
     if (noResults) {
-      return <Typography variant="h5">No results found.</Typography>
+      return <Typography className={classes.marginTop10} variant="h5">No results found.</Typography>
     }
 
     return(
