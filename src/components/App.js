@@ -20,6 +20,7 @@ class App extends Component {
       term: '',
       data: {},
       favorites: {},
+      favoritesCount: 0,
       tab: 'home',
       isFetching: false,
       noResults: false,
@@ -63,7 +64,7 @@ class App extends Component {
 
   handleFavoriteClick = (item) => {
     const { kind } = item;
-    let { data, favorites } = this.state;
+    let { data, favorites, favoritesCount } = this.state;
     const items = data[item.kind];
 
     const newItems = items.map((result) => {
@@ -76,6 +77,7 @@ class App extends Component {
       return result;
     });
 
+    favoritesCount++;
     data[kind] = newItems;
     favorites[kind] = favorites[kind] || [];
     const currentFavorites = favorites[kind];
@@ -91,6 +93,7 @@ class App extends Component {
     this.setState({
       data,
       favorites,
+      favoritesCount,
     });
   }
 
@@ -101,7 +104,7 @@ class App extends Component {
   }
 
   render() {
-    const { data, term, tab, favorites, isFetching, noResults } = this.state;
+    const { data, term, tab, favorites, favoritesCount, isFetching, noResults } = this.state;
     return (
       <div className="App">
         <AppBar position="static" color="default">
@@ -127,7 +130,8 @@ class App extends Component {
               results={data}
               onFavoriteClick={this.handleFavoriteClick}
               isFetching={isFetching}
-              noResults={noResults}/>
+              noResults={noResults}
+              favoritesCount={favoritesCount}/>
           </div>
         }
         {tab === 'favorites' && <FavoritesList favorites={favorites} />}

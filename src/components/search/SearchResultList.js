@@ -11,8 +11,11 @@ import { removeDashes, capitalize } from '../../utils/helpers';
 
 class SearchResultList extends Component {
   shouldComponentUpdate(nextProps, _nextState) {
-    const { isFetching } = this.props;
-    if (isFetching !== nextProps.isFetching) {
+    const { isFetching, favoritesCount } = this.props;
+    if (nextProps.favoritesCount !== favoritesCount) {
+      return true;
+    }
+    if (nextProps.isFetching !== isFetching) {
       return true;
     }
     return false;
