@@ -4,42 +4,37 @@ import {
   Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import SearchResult from './SearchResult';
-import styles from './styles';
+import FavoriteItem from './FavoriteItem';
+import styles from '../search/styles';
 import { removeDashes, capitalize } from '../../utils/helpers';
 
-class SearchResultList extends Component {
-  handleClick = (item) => {
-    this.props.onFavoriteClick(item);
-  }
-
+class FavoritesList extends Component {
   render() {
-    const { results } = this.props;
+    const { favorites } = this.props;
 
+    console.log(favorites);
     return(
       <div>
-        { results && Object.keys(results).length > 0 &&
+        { favorites && Object.keys(favorites).length > 0 &&
           <div>
-            {Object.keys(results).map((kind, i, arr) => {
+            {Object.keys(favorites).map((kind, i, arr) => {
               return(
-                <div key={`${kind}-wrapper`}>
+                <div key={`favorites-${kind}-wrapper`}>
                   <Typography variant="h4">
                     {(capitalize(removeDashes(kind)))}
                   </Typography>
-                  <div
-                    key={`${kind}-${i}-container`}
-                    style={(i === arr.length - 1) ? styles.cardNoMargin : styles.cardMargin}>
+                  <div style={(i === arr.length - 1) ? styles.cardNoMargin : styles.cardMargin}>
                     <Grid container spacing={16}>
                       <Grid item xs={12}>
                         <Grid container justify="center" spacing={24}>
-                          {results[kind].map((result, j) => {
+                          {favorites[kind].map((favorite) => {
+                            const { trackId } = favorite;
                             return(
-                              <SearchResult
-                                key={`${result}-${j}`}
-                                item={result}
-                                onClick={this.handleClick}
+                              <FavoriteItem
+                                key={`favorite-${trackId}`}
+                                item={favorite}
                               />
-                            )
+                            );
                           })}
                         </Grid>
                       </Grid>
@@ -55,4 +50,4 @@ class SearchResultList extends Component {
   }
 }
 
-export default withStyles(styles)(SearchResultList);
+export default withStyles(styles)(FavoritesList);
