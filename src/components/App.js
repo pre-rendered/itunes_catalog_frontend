@@ -11,7 +11,8 @@ class App extends Component {
     super();
     this.state = {
       term: '',
-      data: {}
+      data: {},
+      favorites: new Set(),
     };
   }
 
@@ -34,6 +35,35 @@ class App extends Component {
       });
   }
 
+  handleFavoriteClick = (item) => {
+    const { kind, trackId } = item;
+    let { data, favorites } = this.state;
+    const items = data[item.kind];
+
+    const newItems = items.map((result) => {
+      if (result.trackId === item.trackId) {
+        result = {
+          ...result,
+          isFavorite: !result.isFavorite,
+        }
+      }
+      return result;
+    });
+
+    data[kind] = newItems;
+
+    if (favorites.has(trackId)) {
+      favorites.delete(trackId);
+    } else {
+      favorites.add(trackId);
+    }
+
+    this.setState({
+      data,
+      favorites,
+    });
+  }
+
   render() {
     const { data, term } = this.state;
     return (
@@ -43,7 +73,10 @@ class App extends Component {
           onSubmit={this.handleSubmit}
           term={term}
         />
-        <SearchResultList results={data} />
+        <SearchResultList
+          results={data}
+          onFavoriteClick={this.handleFavoriteClick}
+        />
       </div>
     );
   }

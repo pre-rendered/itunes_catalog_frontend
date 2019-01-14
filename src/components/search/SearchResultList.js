@@ -9,22 +9,8 @@ import styles from './styles';
 import { removeDashes, capitalize } from '../../utils/helpers';
 
 class SearchResultList extends Component {
-  componentWillMount() {
-    this.setState({
-      favorites: new Set(),
-    });
-  }
-
-  toggleFavorite = (trackId) => {
-    let { favorites } = this.state;
-    if (favorites.has(trackId)) {
-      favorites.delete(trackId);
-    } else {
-      favorites.add(trackId);
-    }
-    this.setState({
-      favorites,
-    });
+  handleClick = (item) => {
+    this.props.onFavoriteClick(item);
   }
 
   render() {
@@ -54,7 +40,7 @@ class SearchResultList extends Component {
                               <SearchResult
                                 key={`${result}-${j}`}
                                 item={result}
-                                onFavoriteClick={this.toggleFavorite}
+                                onClick={this.handleClick}
                               />
                             )
                           })}
@@ -72,4 +58,4 @@ class SearchResultList extends Component {
   }
 }
 
-export default (withStyles(styles)(SearchResultList));
+export default withStyles(styles)(SearchResultList);

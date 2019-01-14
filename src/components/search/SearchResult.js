@@ -12,16 +12,18 @@ import {
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import styles from './styles';
 
 class SearchResult extends Component {
-  handleClick = (ev) => {
-    this.props.onFavoriteClick(ev.target.id);
+  onClick = () => {
+    const { item, onClick } = this.props;
+    onClick(item);
   }
 
   render() {
     const { classes, item } = this.props;
-    const { trackId, trackName, artworkUrl100, trackViewUrl, primaryGenreName } = item;
+    const { trackId, trackName, artworkUrl100, trackViewUrl, primaryGenreName, isFavorite } = item;
     return(
       <Grid item>
         <Card className={classes.card}>
@@ -48,9 +50,9 @@ class SearchResult extends Component {
             <IconButton
               aria-label="Add to favorites"
               id={trackId}
-              onClick={this.handleClick}
+              onClick={this.onClick}
             >
-              <FavoriteBorder color="secondary" />
+              { isFavorite ? <FavoriteIcon color="secondary"/> : <FavoriteBorder color="secondary" /> }
             </IconButton>
             <Link
               href={trackViewUrl}
