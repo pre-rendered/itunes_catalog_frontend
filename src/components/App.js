@@ -8,7 +8,6 @@ import {
 import Searchbar from './search/Searchbar';
 import SearchResultList from './search/SearchResultList';
 import FavoritesList from './favorites/FavoritesList';
-import { removeEmpty, mergeAndDedup } from '../utils/helpers';
 import '../styles/App.css';
 
 const uri = `http://localhost:4000/api/search?term=`;
@@ -65,6 +64,7 @@ class App extends Component {
   handleFavoriteClick = (item) => {
     const { kind } = item;
     let { data, favorites, favoritesCount } = this.state;
+    let favoriteRemoved = false;
     const items = data[item.kind];
 
     const newItems = items.map((result) => {
@@ -79,16 +79,18 @@ class App extends Component {
 
     favoritesCount++;
     data[kind] = newItems;
-    favorites[kind] = favorites[kind] || [];
-    const currentFavorites = favorites[kind];
-    
-    const newFavorites = newItems.filter((newItem) => {
-      return newItem.isFavorite;
+    favorites[kind] = favorites[kind] || new Set();
+
+    favorites[kind].forEach((favorite) => {
+      if (favorite.trackId === item.trackId) {
+        favorites[kind].delete(favorite);
+        favoriteRemoved = true;
+      }
     });
 
-    favorites[kind] = mergeAndDedup([currentFavorites, newFavorites]);
-
-    removeEmpty(favorites);
+    if (!favoriteRemoved) {
+      favorites[kind].add(item);
+    }
 
     this.setState({
       data,

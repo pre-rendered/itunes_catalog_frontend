@@ -1,51 +1,46 @@
 import React, { Component } from 'react';
 import {
   Grid,
-  Typography,
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import FavoriteItem from './FavoriteItem';
 import styles from '../search/styles';
-import { removeDashes, capitalize } from '../../utils/helpers';
+import FavoriteItem from './FavoriteItem';
 
 class FavoritesList extends Component {
   render() {
     const { classes, favorites } = this.props;
+    const exists = favorites && Object.keys(favorites).length > 0;
+    let favs = [];
 
-    if (Object.keys(favorites).length === 0) {
-      return <Typography className={classes.marginTop10} variant="h5">No favorites added.</Typography>
+    if (exists) {
+      Object.keys(favorites).map((kind, i, arr) => {
+        return favorites[kind].forEach((favorite) => {
+          favs.push(favorite);
+        });
+      });
     }
 
     return(
       <div>
-        { favorites && Object.keys(favorites).length > 0 &&
-          <div>
-            {Object.keys(favorites).map((kind, i, arr) => {
-              return(
-                <div key={`favorites-${kind}-wrapper`}>
-                  <Typography variant="h4">
-                    {(capitalize(removeDashes(kind)))}
-                  </Typography>
-                  <div style={(i === arr.length - 1) ? styles.cardNoMargin : styles.cardMargin}>
-                    <Grid container spacing={16}>
-                      <Grid item xs={12}>
-                        <Grid container justify="center" spacing={24}>
-                          {favorites[kind].map((favorite) => {
-                            const { trackId } = favorite;
-                            return(
-                              <FavoriteItem
-                                key={`favorite-${trackId}`}
-                                item={favorite}
-                              />
-                            );
-                          })}
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </div>
-              );
-            })}
+        { exists &&
+          <div className={classes.marginTop10}>
+            <Grid container spacing={16}>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={24}>
+                  {
+                    favs.map((favorite) => {
+                      const { trackId } = favorite;
+                      return (
+                        <FavoriteItem
+                          key={`favorite-${trackId}`}
+                          item={favorite}
+                        />
+                      )
+                    })
+                  }
+                </Grid>
+              </Grid>
+            </Grid>
           </div>
         }
       </div>

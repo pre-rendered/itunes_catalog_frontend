@@ -15,7 +15,7 @@ import styles from '../search/styles';
 class FavoriteItem extends Component {
   render() {
     const { classes, item } = this.props;
-    const { trackName, artworkUrl100, trackViewUrl, primaryGenreName } = item;
+    const { artistName, trackName, kind, artworkUrl100, trackViewUrl, primaryGenreName } = item;
     return(
       <Grid item>
         <Card className={classes.card}>
@@ -34,11 +34,17 @@ class FavoriteItem extends Component {
             >
               {trackName}
             </Typography>
+            <Typography
+              gutterBottom
+              className={classes.typographyContent}
+            >
+              {artistName}
+            </Typography>
             <Typography component="p">
-              Genre: {primaryGenreName}
+              Genre: {primaryGenreName}, Type: {kind}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.favoriteItem}>
             <Link
               href={trackViewUrl}
               target="_blank"

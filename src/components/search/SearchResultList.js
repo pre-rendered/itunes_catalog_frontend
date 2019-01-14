@@ -7,7 +7,6 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import SearchResult from './SearchResult';
 import styles from './styles';
-import { removeDashes, capitalize } from '../../utils/helpers';
 
 class SearchResultList extends Component {
   shouldComponentUpdate(nextProps, _nextState) {
@@ -44,7 +43,7 @@ class SearchResultList extends Component {
               return(
                 <div key={`${kind}-wrapper`}>
                   <Typography variant="h4">
-                    {(capitalize(removeDashes(kind)))}
+                    {kind}
                   </Typography>
                   <div
                     key={`${kind}-${i}-container`}

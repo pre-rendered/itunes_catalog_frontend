@@ -5,12 +5,13 @@ const styles = {
     minHeight: 300,
     maxHeight: 300,
   },
-  typographyContent: {
-    fontSize: '16px',
-    fontWeight: 500,
-  },
   cardMargin: {
     marginBottom: '32px',
+  },
+  favoriteItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'center',
   },
   marginTop10: {
     marginTop: 10,
@@ -28,6 +29,10 @@ const styles = {
   },
   textField: {
     width: 300,
+  },
+  typographyContent: {
+    fontSize: '16px',
+    fontWeight: 500,
   },
 }
 

@@ -23,7 +23,15 @@ class SearchResult extends Component {
 
   render() {
     const { classes, item } = this.props;
-    const { trackId, trackName, artworkUrl100, trackViewUrl, primaryGenreName, isFavorite } = item;
+    const {
+      trackId,
+      artistName,
+      kind,
+      trackName,
+      artworkUrl100,
+      trackViewUrl,
+      primaryGenreName,
+      isFavorite } = item;
     return(
       <Grid item>
         <Card className={classes.card}>
@@ -40,10 +48,10 @@ class SearchResult extends Component {
               gutterBottom
               className={classes.typographyContent}
             >
-              {trackName}
+              {trackName} - {artistName}
             </Typography>
             <Typography component="p">
-              Genre: {primaryGenreName}
+              Genre: {primaryGenreName}, Type: {kind}
             </Typography>
           </CardContent>
           <CardActions>
