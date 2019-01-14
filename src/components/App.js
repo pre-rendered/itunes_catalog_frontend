@@ -8,7 +8,7 @@ import {
 import Searchbar from './search/Searchbar';
 import SearchResultList from './search/SearchResultList';
 import FavoritesList from './favorites/FavoritesList';
-import { removeEmpty } from '../utils/helpers';
+import { removeEmpty, mergeAndDedup } from '../utils/helpers';
 import '../styles/App.css';
 
 const uri = `http://localhost:4000/api/search?term=`;
@@ -52,6 +52,11 @@ class App extends Component {
         });
       })
       .catch((err) => {
+        this.setState({
+          data: {},
+          isFetching: false,
+          noResults: true,
+        });
         console.log(err);
       });
   }
@@ -72,9 +77,14 @@ class App extends Component {
     });
 
     data[kind] = newItems;
-    favorites[kind] = newItems.filter((newItem) => {
+    favorites[kind] = favorites[kind] || [];
+    const currentFavorites = favorites[kind];
+    
+    const newFavorites = newItems.filter((newItem) => {
       return newItem.isFavorite;
     });
+
+    favorites[kind] = mergeAndDedup([currentFavorites, newFavorites]);
 
     removeEmpty(favorites);
 
@@ -121,7 +131,6 @@ class App extends Component {
           </div>
         }
         {tab === 'favorites' && <FavoritesList favorites={favorites} />}
-        
       </div>
     );
   }

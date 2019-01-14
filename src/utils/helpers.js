@@ -14,3 +14,7 @@ export const capitalize = (string) => {
 export const removeEmpty = (obj) => {
   Object.keys(obj).forEach((key) => (obj[key].length === 0) && delete obj[key]);
 }
+
+export const mergeAndDedup = (arr) => {
+  return [...new Set([].concat(...arr))];
+}
